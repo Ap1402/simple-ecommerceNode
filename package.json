@@ -1,0 +1,33 @@
+{
+  "name": "e-commerce-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "server": "nodemon server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Flz14/simple-ecommerceNode.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Flz14/simple-ecommerceNode/issues"
+  },
+  "homepage": "https://github.com/Flz14/simple-ecommerceNode#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "config": "^3.3.0",
+    "cors": "^2.8.5",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "express-validator": "^6.4.0",
+    "mysql2": "^2.1.0",
+    "nodemon": "^2.0.2",
+    "path": "^0.12.7",
+    "request": "^2.88.2",
+    "sequelize": "^5.21.5"
+  }
+}
