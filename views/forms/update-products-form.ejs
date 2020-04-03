@@ -1,22 +1,50 @@
-<form  action="/admin/update-product" method="POST">
-
-    <div class="form-group row">
-        <label for="productName" class="col-md-3  col-form-label">Name</label>
-        <div class="col-md-9">
-            <input  class="form-control"type="text" value ="<% productName %>" name="productName" id="productName">
-        </div>
-      </div>
-      <div class="form-group row">
-          <label for="price" class="col-md-3  col-form-label">Price</label>
-          <div class="col-md-9">
-              <input  class="form-control"type="number" value ="<% price %>" name="price" id="price">
-            </div>
-        </div>
-                              <div class="form-group row">
-                                <label for="description" class="col-md-3  col-form-label">Description</label>
-                                <div class="col-md-9">
-                                    <textarea  class="form-control"type="text" value ="<% description %>" name="description" id="description"></textarea>
-                                </div>
-                              </div>
-        <button type="submit" class="btn btn-primary">Add Product</button>
-    </form>
+<form action="/admin/update-product" method="POST">
+  <div class="form-group row">
+    <label for="productName" class="col-md-3  col-form-label">Name</label>
+    <div class="col-md-9">
+      <input
+        class="form-control"
+        type="text"
+        value="<%= productName %>"
+        name="productName"
+        id="productName"
+      />
+      <input
+        class="form-control"
+        type="number"
+        hidden="true"
+        value="<%= prodId %>"
+        name="prodId"
+        id="prodId"
+      />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="price" class="col-md-3  col-form-label">Price</label>
+    <div class="col-md-9">
+      <input
+        class="form-control"
+        type="number"
+        value="<%= price %>"
+        name="price"
+        id="price"
+      />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="description" class="col-md-3  col-form-label"
+      >Description</label
+    >
+    <div class="col-md-9">
+      <textarea
+        class="form-control"
+        type="text"
+        name="description"
+        id="description"
+      >
+<%= description %></textarea
+      >
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Add Product</button>
+</form>

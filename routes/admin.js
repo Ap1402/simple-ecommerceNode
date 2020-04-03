@@ -3,9 +3,8 @@ const path = require("path");
 const express = require("express");
 
 const rootDir = require("../util/path");
-const productsController = require("../controllers/products");
+const productsController = require("../controllers/ProductsController");
 const router = express.Router();
-
 
 // /admin/add-product => GET
 router.get("/add-product", (req, res, next) => {
@@ -27,8 +26,8 @@ router.post("/update-product", productsController.postUpdateProduct);
 // /admin/update-product => GET
 router.get("/update-product/:prodId", productsController.getUpdateProduct);
 
-router.get("/",productsController.getAllProducts)
+router.get("/", productsController.getAllProducts);
 
-router.get("/:prodId",productsController.getProductById)
+router.get("/:prodId", productsController.getProductById);
 
 exports.routes = router;
