@@ -1,9 +1,8 @@
-const path = require("path");
-
 const express = require("express");
 
-const rootDir = require("../util/path");
 const productsController = require("../controllers/ProductsController");
+const usersController = require("../controllers/UsersController");
+
 const router = express.Router();
 
 // /admin/add-product => GET
@@ -27,6 +26,9 @@ router.post("/update-product", productsController.postUpdateProduct);
 router.get("/update-product/:prodId", productsController.getUpdateProduct);
 
 router.get("/", productsController.getAllProducts);
+
+router.get("/register-user", usersController.getRegisterUser);
+router.post("/register-user", usersController.postRegisterUser);
 
 router.get("/:prodId", productsController.getProductById);
 

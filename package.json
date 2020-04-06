@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/Flz14/simple-ecommerceNode#readme",
   "dependencies": {
+    "bcrypt": "^4.0.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "config": "^3.3.0",
     "cors": "^2.8.5",
