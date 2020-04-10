@@ -10,8 +10,7 @@ exports.postRegisterUser = async (req, res, next) => {
       password: password
     });
 
-    console.log(result);
-    return res.status(200).send("Correcto");
+    return res.status(200).json(result);
   } catch (err) {
     console.error(err);
     return res.status(400).send("Server error");
@@ -36,9 +35,10 @@ exports.postLoginUser = async (req, res, next) => {
     const user = await User.findOne({
       where: { email: email }
     });
-
-    console.log(user);
-    return res.status(200).json(user);
+    if(user && user.comparePassword(password)){
+      return res.status(200).json(user);
+    }
+    return res.status(200).send('There is a problem with your credentials');
   } catch (err) {
     console.error(err);
     return res.status(400).send("Server error");

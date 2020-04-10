@@ -4,7 +4,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const sequelize = require("./config/database");
 const app = express();
-
+const Cart = require("./models/Cart");
+const User = require("./models/User");
 app.set("view engine", "ejs");
 app.set("views", "views");
 
@@ -24,6 +25,9 @@ app.use(userRoutes.routes);
 app.use((req, res, next) => {
   res.status(404).render("404", { pageTitle: "Page Not Found" });
 });
+
+Cart.belongsTo(User);
+User.hasMany(Cart);
 
 sequelize
   .sync()
