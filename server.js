@@ -6,6 +6,11 @@ const sequelize = require("./config/database");
 const app = express();
 const Cart = require("./models/Cart");
 const User = require("./models/User");
+const OrderItem = require("./models/Order-items");
+const CartItem = require("./models/Cart-items");
+const Order = require("./models/Order");
+const Product = require("./models/Product");
+
 app.set("view engine", "ejs");
 app.set("views", "views");
 
@@ -27,11 +32,16 @@ app.use((req, res, next) => {
 });
 
 Cart.belongsTo(User);
-User.hasMany(Cart);
+User.hasMany(Order);
+User.hasOne(Cart);
+Cart.belongsToMany(Product, { through: CartItem });
+Order.belongsToMany(Product, { through: OrderItem });
+User.hasMany(Order);
+Order.belongsTo(User);
 
 sequelize
   .sync()
-  .then(result => console.log(result))
-  .catch(error => console.error(error));
+  .then((result) => console.log(result))
+  .catch((error) => console.error(error));
 
 app.listen(3000);

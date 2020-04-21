@@ -6,23 +6,23 @@ const Order = sequelize.define("order", {
     type: Sequelize.INTEGER,
     primaryKey: true,
     autoIncrement: true,
-    allowNull: false
+    allowNull: false,
   },
-  total:{
-      type:Sequelize.FLOAT,
-      allowNull:false
+  total: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
   },
-  shippingAddress:{
-      type: Sequelize.STRING
+  shippingAddress: {
+    type: Sequelize.STRING,
   },
-  phoneNumber:{
-      type: Sequelize.STRING
+  phoneNumber: {
+    type: Sequelize.STRING,
   },
-  status:{
-      type:Sequelize.INTEGER,
-      allowNull: false,
-      default: 0
-  }
+  status: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    default: 0,
+  },
 });
 
-module.exports = Order;Y
+module.exports = Order;
