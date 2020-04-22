@@ -11,25 +11,18 @@ const CartItem = require("./models/Cart-items");
 const Order = require("./models/Order");
 const Product = require("./models/Product");
 
-app.set("view engine", "ejs");
-app.set("views", "views");
-
 const adminData = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 const userRoutes = require("./routes/user");
 
-//app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/admin", adminData.routes);
-app.use(shopRoutes);
-app.use(userRoutes.routes);
-
-app.use((req, res, next) => {
-  res.status(404).render("404", { pageTitle: "Page Not Found" });
-});
+app.use("/shop", shopRoutes);
+app.use("/user", userRoutes.routes);
 
 Cart.belongsTo(User);
 User.hasMany(Order);

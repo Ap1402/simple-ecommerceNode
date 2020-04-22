@@ -12,7 +12,7 @@ router.get("/add-product", (req, res, next) => {
     path: "/admin/add-product",
     formsCSS: true,
     productCSS: true,
-    activeAddProduct: true
+    activeAddProduct: true,
   });
 });
 
@@ -22,13 +22,7 @@ router.post("/add-product", productsController.postAddProduct);
 // /admin/update-product => POST
 router.post("/update-product", productsController.postUpdateProduct);
 
-// /admin/update-product => GET
-router.get("/update-product/:prodId", productsController.getUpdateProduct);
-
 router.get("/", productsController.getAllProducts);
-
-router.get("/register-user", usersController.getRegisterUser);
-router.post("/register-user", usersController.postRegisterUser);
 
 router.get("/:prodId", productsController.getProductById);
 
