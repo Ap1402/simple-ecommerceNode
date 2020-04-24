@@ -1,17 +1,20 @@
 const Product = require("../models/Product");
+const validators = require("../middleware/UserInputValidator");
 
 exports.postAddProduct = async (req, res, next) => {
   try {
-    const { name, price, description } = req.body;
-    console.log(name);
-    const result = await Product.create({
-      name: name,
-      price: price,
-      description: description,
-    });
-
-    console.log(result);
-    return res.status(200).send(result);
+    const { value, error } = validators.productSchema.validate(req.body);
+    if (!error) {
+      const result = await Product.create({
+        name: value.name,
+        price: value.price,
+        description: value.description,
+      });
+      return res.status(200).json(result);
+    } else {
+      console.error(error);
+      return res.status(400).json({ errors: [{ message: error.message }] });
+    }
   } catch (err) {
     console.error(err);
     return res.status(400).send("Server error");
