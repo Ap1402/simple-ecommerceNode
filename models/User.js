@@ -3,7 +3,7 @@ const sequelize = require("../config/database");
 const bcrypt = require("bcryptjs");
 
 class User extends Model {
-  async comparePassword(password) {
+  comparePassword(password) {
     return bcrypt.compareSync(password, this.password());
   }
 }
@@ -14,28 +14,30 @@ const UserModel = User.init(
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false
+      allowNull: false,
     },
     name: {
       type: Sequelize.STRING,
-      allowNull: false
+    },
+    lastName: {
+      type: Sequelize.STRING,
     },
     username: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
     email: {
       type: Sequelize.STRING,
       allowNull: false,
-      unique: true
+      unique: true,
     },
     password: {
       type: Sequelize.STRING,
       allowNull: false,
       get() {
         return () => this.getDataValue("password");
-      }
-    }
+      },
+    },
   },
   {
     // Other model options go here
@@ -57,8 +59,8 @@ const UserModel = User.init(
               ? bcrypt.hashSync(user.password(), 10)
               : "";
         }
-      }
-    }
+      },
+    },
   }
 );
 

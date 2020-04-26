@@ -11,9 +11,11 @@ const Order = sequelize.define("order", {
   total: {
     type: Sequelize.FLOAT,
     allowNull: false,
+    default: 0.0,
   },
   shippingAddress: {
     type: Sequelize.STRING,
+    default: "No address provided",
   },
   phoneNumber: {
     type: Sequelize.STRING,
@@ -22,6 +24,9 @@ const Order = sequelize.define("order", {
     type: Sequelize.INTEGER,
     allowNull: false,
     default: 0,
+  },
+  specificacionForShipping: {
+    type: Sequelize.STRING,
   },
 });
 

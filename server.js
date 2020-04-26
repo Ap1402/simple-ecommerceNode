@@ -10,6 +10,7 @@ const OrderItem = require("./models/Order-items");
 const CartItem = require("./models/Cart-items");
 const Order = require("./models/Order");
 const Product = require("./models/Product");
+const Token = require("./models/Token");
 
 const adminData = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
@@ -27,9 +28,12 @@ app.use("/user", userRoutes.routes);
 Cart.belongsTo(User);
 User.hasMany(Order);
 User.hasOne(Cart);
+Token.belongsTo(Token);
 Cart.belongsToMany(Product, { through: CartItem });
 Order.belongsToMany(Product, { through: OrderItem });
 User.hasMany(Order);
+User.hasMany(Token);
+
 Order.belongsTo(User);
 
 sequelize

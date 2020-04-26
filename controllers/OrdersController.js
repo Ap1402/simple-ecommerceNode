@@ -1,10 +1,16 @@
 const Order = require("../models/Order");
 const validators = require("../middleware/UserInputValidator");
 
-exports.addItemToCart = async (req, res, next) => {
+exports.postCreateOrder = async (req, res, next) => {
   try {
-    // const { value, error } = validators.orderSchema.validate(req.body);
+    const { value, error } = validators.orderSchema.validate(req.body);
     if (!error) {
+      const result = await Order.create({
+        name: value.name,
+        username: value.username,
+        email: value.email,
+        password: value.password,
+      });
       return res.status(200).json(result);
     } else {
       return res.status(400).json({ errors: [{ message: error.message }] });
