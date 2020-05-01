@@ -1,6 +1,5 @@
 const User = require("../models/User");
 const Token = require("../models/Token");
-
 const validators = require("../middleware/UserInputValidator");
 const jwt = require("jsonwebtoken");
 const config = require("config");
@@ -18,21 +17,23 @@ exports.postRegisterUser = async (req, res, next) => {
       });
       return res.status(200).json(result);
     } else {
-      return res.status(400).json({ errors: [{ message: error.message }] });
+      return res.status(401).json({ errors: [{ message: error.message }] });
     }
   } catch (err) {
-    console.error(err.errors);
-    return res.status(400).json({ errors: err.errors });
+    return res.status(500).send("Server Error");
   }
 };
 
 exports.showAllUsers = async (req, res, next) => {
   try {
-    const users = await User.find();
+    const users = await User.findAll();
+    if (users.length == 0) {
+      return res.status(404).json("No users found");
+    }
     return res.status(200).json(users);
   } catch (err) {
     console.error(err);
-    return res.status(400).json(err);
+    return res.status(500).send("Server Error");
   }
 };
 
@@ -53,29 +54,33 @@ exports.loginUser = async (req, res, next) => {
         );
         //user.tokens = user.tokens.concat({ token });
         //await user.save();
-        const result = await user.createToken({
+        await user.createToken({
           tokenKey: token,
-          expiresOn: Moment().add("5", "d"),
         });
-        return res.status(200).json(token);
+        return res.status(200).json({ token: token });
       }
-      return res.status(200).send("There is a problem with your credentials");
+      return res
+        .status(401)
+        .json({ error: "There is a problem with your credentials" });
     } else {
       return res.status(400).json({ errors: [{ message: error.message }] });
     }
   } catch (err) {
     console.error(err);
-    return res.status(400).send("Server error");
+    return res.status(500).send("Server Error");
   }
 };
 
 exports.getUserById = async (req, res, next) => {
   try {
-    const { userId } = req.params.user_id;
-    const user = await User.findOne({ where: { id: userId } });
+    const userId = req.params.userId;
+    const user = await User.findByPk(userId);
+    if (user == null) {
+      return res.status(404).json("User not found");
+    }
     return res.status(200).json(user);
   } catch (err) {
     console.error(err);
-    return res.status(400).send("Server Error");
+    return res.status(500).send("Server Error");
   }
 };

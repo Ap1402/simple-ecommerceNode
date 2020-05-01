@@ -1,38 +1,42 @@
 const Product = require("../models/Product");
+
 const validators = require("../middleware/UserInputValidator");
 
-exports.postAddProduct = async (req, res, next) => {
+exports.createProduct = async (req, res, next) => {
   try {
     const { value, error } = validators.productSchema.validate(req.body);
     if (!error) {
-      const result = await Product.create({
+      const imageUrl = req.file ? req.file.path : "";
+      const result = await req.user.createProduct({
         name: value.name,
         price: value.price,
         description: value.description,
+        imageUrl: imageUrl,
       });
-      return res.status(200).json(result);
+      return res.status(201).json(result);
     } else {
       console.error(error);
       return res.status(400).json({ errors: [{ message: error.message }] });
     }
   } catch (err) {
     console.error(err);
-    return res.status(400).send("Server error");
+    return res.status(500).send("Server Error");
   }
 };
 
 exports.getAllProducts = async (req, res, next) => {
   try {
-    const products = await Product.findAll(
-      {
-        attributes: ["id", "name", "description", "price"],
-      },
-      { raw: true }
-    );
-    return res.status(200).send(products);
+    const products = await Product.findAll();
+
+    if (!products) {
+      return res
+        .status(404)
+        .json({ errors: [{ message: "There are no products registered" }] });
+    }
+    return res.status(200).json(products);
   } catch (err) {
     console.error(err);
-    return res.status(400).send("Server Error");
+    return res.status(500).send("Server Error");
   }
 };
 
@@ -40,32 +44,45 @@ exports.getProductById = async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.prodId, { raw: true });
     if (!product) {
-      return res.status(400).send("This product does not exists");
+      return res
+        .status(404)
+        .json({ errors: [{ message: "This product does not exists" }] });
     }
-    return res.status(200).send(product);
+    return res.status(200).json(product);
   } catch (err) {
     console.error(err);
-    return res.status(400).send("Server Error");
+    return res.status(500).send("Server Error");
   }
 };
 
-// POST /admin/update-product
+// PUT /products/update
 
-exports.postUpdateProduct = async (req, res, next) => {
-  const { productName, price, description } = req.body;
+exports.updateProduct = async (req, res, next) => {
   try {
-    const product = await Product.findByPk(req.params.prodId, { raw: true });
-    if (!product) {
-      return res.status(400).send("This product does not exists");
-    }
-    product.name = productName;
-    product.price = price;
-    product.description = description;
-    product.save();
+    const { value, error } = validators.productSchema.validate(req.body);
+    if (!error) {
+      const product = await Product.findByPk(req.params.productId);
+      if (!product) {
+        return res
+          .status(404)
+          .json({ errors: [{ message: "This product does not exists" }] });
+      }
+      const imageUrl = req.file ? req.file.path : "";
 
-    return res.status(201).json(product);
+      product.name = value.name;
+      product.price = value.price;
+      product.description = value.description;
+      product.discountAmount = value.discountAmount;
+      product.discountPercent = value.discountPercent;
+      product.imageUrl = imageUrl;
+      product.save();
+
+      return res.status(200).json(product);
+    } else {
+      return res.status(400).json({ errors: [{ message: error.message }] });
+    }
   } catch (err) {
     console.error(err);
-    return res.status(400).send("Server Error");
+    return res.status(500).send("Server Error");
   }
 };

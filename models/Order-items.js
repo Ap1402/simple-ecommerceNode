@@ -12,7 +12,7 @@ const OrderItem = sequelize.define("orderItem", {
     type: Sequelize.INTEGER,
   },
   unitPrice: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.FLOAT,
   },
   discountedAmountAtOrder: {
     type: Sequelize.INTEGER,

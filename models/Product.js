@@ -15,20 +15,27 @@ const Product = sequelize.define("product", {
   description: {
     type: Sequelize.STRING,
   },
-  imageId: {
+  imageUrl: {
     type: Sequelize.STRING,
   },
   price: {
     type: Sequelize.FLOAT,
     allowNull: false,
   },
-  discountedPrice: {
-    type: Sequelize.INTEGER,
+  discountAmount: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+    defaultValue: 0.0,
+  },
+  discountPercent: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+    defaultValue: 0.0,
   },
   status: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    default: 1,
+    defaultValue: 1,
   },
 });
 

@@ -2,7 +2,8 @@ const express = require("express");
 
 const productsController = require("../controllers/ProductsController");
 const usersController = require("../controllers/UsersController");
-
+const auth = require("../middleware/auth");
+const upload = require("../config/multer");
 const router = express.Router();
 
 // /admin/add-product => GET
@@ -16,14 +17,6 @@ router.get("/add-product", (req, res, next) => {
   });
 });
 
-// /admin/add-product => POST
-router.post("/add-product", productsController.postAddProduct);
-
-// /admin/update-product => POST
-router.post("/update-product", productsController.postUpdateProduct);
-
-router.get("/", productsController.getAllProducts);
-
-router.get("/:prodId", productsController.getProductById);
+router.get("/all-users", auth, usersController.showAllUsers);
 
 exports.routes = router;
