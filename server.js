@@ -14,7 +14,6 @@ const Token = require("./models/Token");
 const Category = require("./models/Category");
 const CategoryProduct = require("./models/CategoryProduct");
 
-const adminData = require("./routes/admin");
 const ordersAndCartsRoutes = require("./routes/orders-carts");
 
 const productRoutes = require("./routes/products");
@@ -25,7 +24,6 @@ app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", adminData.routes);
 app.use("/", ordersAndCartsRoutes);
 
 app.use("/", productRoutes);

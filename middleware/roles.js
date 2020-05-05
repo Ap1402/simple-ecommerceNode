@@ -13,7 +13,7 @@ exports.roles = (function () {
     .createOwn("order")
     .updateOwn("order")
     .createOwn("product")
-    .readOwn("product")
+    .readAny("product")
     .updateOwn("product")
     .deleteOwn("product")
     .readAny("user");

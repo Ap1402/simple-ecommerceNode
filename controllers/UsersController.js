@@ -1,6 +1,6 @@
 const User = require("../models/User");
 const Token = require("../models/Token");
-const validators = require("../middleware/UserInputValidator");
+const validators = require("../util/UserInputValidator");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 var Moment = require("moment");
@@ -24,7 +24,7 @@ exports.postRegisterUser = async (req, res, next) => {
   }
 };
 
-exports.showAllUsers = async (req, res, next) => {
+exports.showUsers = async (req, res, next) => {
   try {
     const users = await User.findAll();
     if (users.length == 0) {
@@ -52,8 +52,7 @@ exports.loginUser = async (req, res, next) => {
           { user: { id: user.id } },
           config.get("jwtSecret")
         );
-        //user.tokens = user.tokens.concat({ token });
-        //await user.save();
+
         await user.createToken({
           tokenKey: token,
         });

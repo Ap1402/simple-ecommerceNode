@@ -1,27 +1,33 @@
 const Order = require("../models/Order");
-const validators = require("../middleware/UserInputValidator");
+const validators = require("../util/UserInputValidator");
 const User = require("../models/User");
 const Product = require("../models/Product");
 
+// Post /carts
+//@access Private, needs req.user from auth middleware
 exports.addItemToCart = async (req, res, next) => {
   try {
-    const { productId } = req.body;
+    // Checking if quantity is specified.
     var { quantity } = req.body;
-    var cart = await req.user.getCart();
-    if (!cart) {
-      cart = await req.user.createCart();
-    }
     if (!quantity || quantity <= 0) {
       quantity = 1;
     }
 
+    // Checking product
+    const { productId } = req.body;
     const productData = await Product.findByPk(productId);
     if (!productData) {
       return res
         .status(404)
         .json({ errors: [{ message: "This product does not exits" }] });
     }
+    // Getting cart or creating new one if it's not created yet.
+    var cart = await req.user.getCart();
+    if (!cart) {
+      cart = await req.user.createCart();
+    }
 
+    // Checking if product is already in cart
     const productInCart = await cart.getProducts({ where: { id: productId } });
     if (productInCart.length > 0) {
       quantity =
@@ -35,6 +41,8 @@ exports.addItemToCart = async (req, res, next) => {
   }
 };
 
+// Get /carts
+//@access Private, needs req.user from auth middleware
 exports.getCurrentUserCart = async (req, res, next) => {
   try {
     var cart = await req.user.getCart();

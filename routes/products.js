@@ -9,7 +9,7 @@ const router = express.Router();
 
 // GET Shows all products
 // @access Public
-router.get("/products", productsController.getAllProducts);
+router.get("/products", productsController.getProducts);
 
 // Post Create product
 //@access Private
@@ -29,6 +29,4 @@ router.put(
   productsController.updateProduct
 );
 
-router.post("/add-item-cart", auth, cartController.addItemToCart);
-router.post("/create-order", auth, ordersController.createOrder);
 module.exports = router;
