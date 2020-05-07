@@ -1,11 +1,57 @@
-**Simple e-commerce Api**
+# Simple e-commerce Api
 ----
-
+## Table of contents
+* [General info](#general-info)
+* [Technologies](#technologies)
+* [Setup](#setup)
+* [Endpoints](#endpoints)
+    * [Users related](#user-related)
+        * [Register](#register-user)
+        * [Login](#login-user)
+        * [Get User By Id](#get-user-by-id)
+        * [Get All User](#get-all-users)
+        
+    * [Products related](#products-related)
+        * [Create Product](#create-product)
+        * [Update Product](#update-product)
+        * [Get All Products](#get-all-products)
+        
+    * [Carts related](#carts-related)
+    * [Orders related](#orders-related)
+    
+## General info
 A simple e-commerce Api made for learning purposes, it's built with Nodejs, Express and Joi for validations.
-- [Installation](#Login)
+	
+## Technologies
+Project is created with:
+* NodeJs
+* Express 
+* Joi
+* Sequelize
+* Mysql
+	
+## Setup
+To run this project, install it locally using npm:
 
-# Register
+```
+$ cd ../simple-ecommerceNode
+$ npm install
+$ npm start
+```
+You also need a mysql database running and configure it changing the config file that is located in "config/database.js"
+```
+const Sequelize = require("sequelize");
+const sequelize = new Sequelize("e-commerce-nodejs", "admin", "admin", {
+  host: "localhost",
+  dialect: "mysql"
+});
+// new Sequelize("Your database name", "database user", "database password"....)
+```
+If you wish to use a postgres database instead, just change the dialect value to "postgres".
 
+## Endpoints
+### User Related
+#### Register User
 **URL** : `/users/`
 
 **Method** : `POST`
@@ -38,7 +84,7 @@ A simple e-commerce Api made for learning purposes, it's built with Nodejs, Expr
 }
 ```
 
-## Success Response
+***Success Response***
 
 **Code** : `200 OK`
 
@@ -53,7 +99,7 @@ A simple e-commerce Api made for learning purposes, it's built with Nodejs, Expr
 }
 ```
 
-## Error Response
+***Error Response***
 
 **Condition** : If any field is empty or it's not an alphanum value
 
@@ -72,7 +118,7 @@ A simple e-commerce Api made for learning purposes, it's built with Nodejs, Expr
 }
 ```
 ----
-# Login
+#### Login
 
 **URL** : `/users/login`
 
