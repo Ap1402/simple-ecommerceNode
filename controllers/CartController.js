@@ -1,6 +1,3 @@
-const Order = require("../models/Order");
-const validators = require("../util/UserInputValidator");
-const User = require("../models/User");
 const Product = require("../models/Product");
 
 // Post /carts

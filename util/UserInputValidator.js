@@ -15,7 +15,11 @@ exports.userSchema = Joi.object({
 
   lastName: Joi.string().max(30),
 
-  password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
+  password: Joi.when("$update", {
+    is: Joi.boolean().valid(true),
+    then: Joi.string().optional(),
+    otherwise: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
+  }),
 
   repeatPassword: Joi.when("$login", {
     is: Joi.boolean().valid(true),

@@ -14,4 +14,6 @@ router.get("/users", usersController.showUsers);
 // Get user By id
 router.get("/users/:userId", auth, usersController.getUserById);
 
+router.put("/users/:userId", auth, usersController.updateUser);
+
 exports.routes = router;

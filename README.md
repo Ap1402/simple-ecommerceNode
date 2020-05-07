@@ -1,36 +1,39 @@
 # Simple e-commerce Api
 
 ## General info
+
 A simple e-commerce Api made for learning purposes, it's built with Nodejs, Express and Joi for validations.
+
 ## Table of contents
-* [General info](#general-info)
-* [Technologies](#technologies)
-* [Setup](#setup)
-* [Endpoints](#endpoints)
-    * [Users related](#user-related)
-        * [Register](#register-user)
-        * [Login](#login-user)
-        * [Get User By Id](#get-user-by-id)
-        * [Get All User](#get-all-users)
-        
-    * [Products related](#products-related)
-        * [Create Product](#create-product)
-        * [Update Product](#update-product)
-        * [Get All Products](#get-all-products)
-        
-    * [Carts related](#carts-related)
-    * [Orders related](#orders-related)
-    
-	
+
+- [General info](#general-info)
+- [Technologies](#technologies)
+- [Setup](#setup)
+- [Endpoints](#endpoints)
+  - [Users related](#user-related)
+    - [Register](#register-user)
+    - [Login](#login-user)
+    - [Get User By Id](#get-user-by-id)
+    - [Get All User](#get-all-users)
+  - [Products related](#products-related)
+    - [Create Product](#create-product)
+    - [Update Product](#update-product)
+    - [Get All Products](#get-all-products)
+  - [Carts related](#carts-related)
+  - [Orders related](#orders-related)
+
 ## Technologies
+
 Project is created with:
-* NodeJs
-* Express 
-* Joi
-* Sequelize
-* Mysql
-	
+
+- NodeJs
+- Express
+- Joi
+- Sequelize
+- Mysql
+
 ## Setup
+
 To run this project, install it locally using npm:
 
 ```
@@ -38,7 +41,9 @@ $ cd ../simple-ecommerceNode
 $ npm install
 $ npm start
 ```
+
 You also need a mysql database running and configure it changing the config file that is located in "config/database.js"
+
 ```
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize("e-commerce-nodejs", "admin", "admin", {
@@ -47,11 +52,15 @@ const sequelize = new Sequelize("e-commerce-nodejs", "admin", "admin", {
 });
 // new Sequelize("Your database name", "database user", "database password"....)
 ```
+
 If you wish to use a postgres database instead, just change the dialect value to "postgres".
 
 ## Endpoints
+
 ### User Related
+
 #### Register User
+
 **URL** : `/users/`
 
 **Method** : `POST`
@@ -62,12 +71,10 @@ If you wish to use a postgres database instead, just change the dialect value to
 
 ```json
 {
-    "name": "[name in plain text]",
-    "password": "[password in plain text]",
-    "username": "[username in plain text]",
-    "email": "[valid email address]",
-
-
+  "name": "[name in plain text]",
+  "password": "[password in plain text]",
+  "username": "[username in plain text]",
+  "email": "[valid email address]"
 }
 ```
 
@@ -75,31 +82,29 @@ If you wish to use a postgres database instead, just change the dialect value to
 
 ```json
 {
-    "email": "iloveauth@example.com",
-    "password": "abcd1234",
-    "name": "Juan Garica",
-   "username": "Juan2020",
-
-
+  "email": "iloveauth@example.com",
+  "password": "abcd1234",
+  "name": "Juan Garica",
+  "username": "Juan2020"
 }
 ```
 
-***Success Response***
+**Success Response**
 
-**Code** : `200 OK`
+**Code** : `201 CREATED`
 
 **Content example**
 
 ```json
 {
-    "id": 1,
-    "name": "Juan Garica",
-    "username": "Juan2020",
-    "email": "iloveauth@example.com",
+  "id": 1,
+  "name": "Juan Garica",
+  "username": "Juan2020",
+  "email": "iloveauth@example.com"
 }
 ```
 
-***Error Response***
+**Error Response**
 
 **Condition** : If any field is empty or it's not an alphanum value
 
@@ -109,15 +114,15 @@ If you wish to use a postgres database instead, just change the dialect value to
 
 ```json
 {
-    "errors": [
-         //Response 1 
-        {"message":"[field] is required"},
-        //Response 2
-        {"message":"[field value] must be an alphanumeric value"}
-    ]
+  "errors": [
+    //Response 1
+    { "message": "[field] is required" },
+    //Response 2
+    { "message": "[field value] must be an alphanumeric value" }
+  ]
 }
 ```
-----
+
 #### Login
 
 **URL** : `/users/login`
@@ -130,9 +135,8 @@ If you wish to use a postgres database instead, just change the dialect value to
 
 ```json
 {
-    "email": "[valid email address]",
-    "password": "[password in plain text]"
-
+  "email": "[valid email address]",
+  "password": "[password in plain text]"
 }
 ```
 
@@ -140,12 +144,12 @@ If you wish to use a postgres database instead, just change the dialect value to
 
 ```json
 {
-    "email": "iloveauth@example.com",
-    "password": "abcd1234",
+  "email": "iloveauth@example.com",
+  "password": "abcd1234"
 }
 ```
 
-## Success Response
+**Success Response**
 
 **Code** : `200 OK`
 
@@ -153,11 +157,11 @@ If you wish to use a postgres database instead, just change the dialect value to
 
 ```json
 {
-   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIVy4aWapaiYbgv1ck"
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIVy4aWapaiYbgv1ck"
 }
 ```
 
-## Error Response
+**Error Response**
 
 **Condition** : If any email and password don't match or if user doesn't exists
 
@@ -167,14 +171,11 @@ If you wish to use a postgres database instead, just change the dialect value to
 
 ```json
 {
-    "errors": [
-        {"message":"There's a problem with your credentials"}
-    ]
+  "errors": [{ "message": "There's a problem with your credentials" }]
 }
 ```
 
-----
-# Create Product
+#### Create Product
 
 **URL** : `/products/`
 
@@ -198,14 +199,14 @@ If you wish to use a postgres database instead, just change the dialect value to
 
 ```json
 {
-    "price": "18.09",
-    "name": "Test product",
-    "description": "A product made for testing purposes",
-    "image": "thisIsAnImage.jpg" (Optional)
+  "price": "18.09",
+  "name": "Test product",
+  "description": "A product made for testing purposes",
+  "image": "thisIsAnImage.jpg"(Optional)
 }
 ```
 
-## Success Response
+**Success Response**
 
 **Code** : `200 OK`
 
@@ -213,21 +214,21 @@ If you wish to use a postgres database instead, just change the dialect value to
 
 ```json
 {
-    "discountAmount": 0,
-    "discountPercent": 0,
-    "status": 1,
-    "id": 1,
-    "name": "Test product",
-    "price": 18.09,
-    "description": "A product made for testing purposes",
-    "imageUrl": "img/thisIsAnImage.jpg",
-    "vendorID": 1,
-    "updatedAt": "2020-05-07T12:07:03.254Z",
-    "createdAt": "2020-05-07T12:07:03.254Z"
+  "discountAmount": 0,
+  "discountPercent": 0,
+  "status": 1,
+  "id": 1,
+  "name": "Test product",
+  "price": 18.09,
+  "description": "A product made for testing purposes",
+  "imageUrl": "img/thisIsAnImage.jpg",
+  "vendorID": 1,
+  "updatedAt": "2020-05-07T12:07:03.254Z",
+  "createdAt": "2020-05-07T12:07:03.254Z"
 }
 ```
 
-## Error Response
+**Error Response**
 
 **Condition** : If any required field is empty
 
@@ -237,8 +238,114 @@ If you wish to use a postgres database instead, just change the dialect value to
 
 ```json
 {
-    "errors": [
-        {"message":"[field name] is required"}
-    ]
+  "errors": [{ "message": "[field name] is required" }]
+}
+```
+
+#### Update Product
+
+**URL** : `/products/:product-id`
+
+**Method** : `PUT`
+
+**Params required** : `Product id`
+
+**Auth required** : YES
+
+**Data constraints**
+
+```json
+{
+    "price": "[price]",
+    "name": "[name]",
+    "description": "[description in plain text]",
+    "image": "JPG, GIF OR PNG file", (optional)
+    "discountAmount": "[discount in plain number]", (optional)
+    "discountPercent": "[discount in percent]", (optional)
+
+}
+```
+
+If you fill discountAmount and discountPercent, both will count for the discount.
+
+**Data example**
+
+```json
+{
+    "price": "18.09",
+    "name": "Test product",
+    "description": "A product made for testing purposes",
+    "image": "thisIsAnImage.jpg" (Optional),
+    "discountAmount": "2.00", (optional)
+    "discountPercent": "3", (optional)
+
+}
+```
+
+**Success Response**
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+{
+  "discountAmount": 2,
+  "discountPercent": 3,
+  "status": 1,
+  "id": 1,
+  "name": "Test product",
+  "price": 18.09,
+  "description": "A product made for testing purposes",
+  "imageUrl": "img/thisIsAnImage.jpg",
+  "vendorID": 1,
+  "updatedAt": "2020-05-07T12:07:03.254Z",
+  "createdAt": "2020-05-07T12:07:03.254Z"
+}
+```
+
+**Error Response**
+
+**Condition** : If any required field is empty
+
+**Code** : `400 BAD REQUEST`
+
+**Content** :
+
+```json
+{
+  "errors": [{ "message": "[field name] is required" }]
+}
+```
+
+#### Get All Products
+
+**URL** : `/products/`
+
+**Method** : `Get`
+
+**Auth required** : NO
+
+**Data constraints**: None
+
+**Success Response**
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+{
+  "discountAmount": 2,
+  "discountPercent": 3,
+  "status": 1,
+  "id": 1,
+  "name": "Test product",
+  "price": 18.09,
+  "description": "A product made for testing purposes",
+  "imageUrl": "img/thisIsAnImage.jpg",
+  "vendorID": 1,
+  "updatedAt": "2020-05-07T12:07:03.254Z",
+  "createdAt": "2020-05-07T12:07:03.254Z"
 }
 ```

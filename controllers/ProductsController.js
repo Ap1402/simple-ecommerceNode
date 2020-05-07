@@ -29,26 +29,31 @@ exports.createProduct = async (req, res, next) => {
 
 // Get /products
 exports.getProducts = async (req, res, next) => {
-  let where = { where: {} };
+  let where = {};
+  let limit = req.query.limit ? parseInt(req.query.limit) : 50;
+  let offset = req.query.skip ? parseInt(req.query.skip) : 0;
   if (req.query.name) {
-    where.where.name = {
+    where.name = {
       [Op.like]: "%" + req.query.name,
     };
   }
   if (req.query.priceFrom) {
-    where.where.price = {
+    where.price = {
       [Op.gte]: [req.query.priceFrom],
     };
   }
   if (req.query.priceTo) {
-    where.where.price = {
-      ...where.where.price,
+    where.price = {
+      ...where.price,
       [Op.lte]: [req.query.priceTo],
     };
   }
   try {
-    console.log(where);
-    const products = await Product.findAll(where);
+    const products = await Product.findAll({
+      where: where,
+      limit: limit,
+      offset: offset,
+    });
 
     if (!products)
       return res

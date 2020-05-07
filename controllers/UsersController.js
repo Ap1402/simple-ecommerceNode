@@ -15,9 +15,9 @@ exports.postRegisterUser = async (req, res, next) => {
         email: value.email,
         password: value.password,
       });
-      return res.status(200).json(result);
+      return res.status(201).json(result);
     } else {
-      return res.status(401).json({ errors: [{ message: error.message }] });
+      return res.status(400).json({ errors: [{ message: error.message }] });
     }
   } catch (err) {
     return res.status(500).send("Server Error");
@@ -28,7 +28,7 @@ exports.showUsers = async (req, res, next) => {
   try {
     const users = await User.findAll();
     if (users.length == 0) {
-      return res.status(404).json("No users found");
+      return res.status(404).json({ errors: [{ message: "No users found" }] });
     }
     return res.status(200).json(users);
   } catch (err) {
@@ -58,9 +58,9 @@ exports.loginUser = async (req, res, next) => {
         });
         return res.status(200).json({ token: token });
       }
-      return res
-        .status(401)
-        .json({ error: "There is a problem with your credentials" });
+      return res.status(400).json({
+        error: [{ message: "There is a problem with your credentials" }],
+      });
     } else {
       return res.status(400).json({ errors: [{ message: error.message }] });
     }
@@ -75,8 +75,47 @@ exports.getUserById = async (req, res, next) => {
     const userId = req.params.userId;
     const user = await User.findByPk(userId);
     if (user == null) {
-      return res.status(404).json("User not found");
+      return res.status(404).json({ errors: [{ message: "User not found" }] });
     }
+    return res.status(200).json(user);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("Server Error");
+  }
+};
+
+exports.updateUser = async (req, res, next) => {
+  try {
+    // Checking if user it's trying to modify another user
+    const userId = req.params.userId;
+    if (!userId == req.user.id)
+      return res.status(401).json({
+        errors: [
+          {
+            message: "Oops, seems you don't have authorization to do that",
+          },
+        ],
+      });
+
+    const { value, error } = validators.userSchema.validate(req.body, {
+      context: { login: false, update: true },
+    });
+
+    if (error)
+      return res.status(400).json({ errors: [{ message: error.message }] });
+
+    const user = await User.findByPk(userId);
+
+    if (user == null)
+      return res.status(404).json({ errors: [{ message: "User not found" }] });
+
+    user.name = value.name;
+    user.lastName = value.lastname;
+    user.username = value.username;
+    user.email = value.email;
+
+    user.save();
+
     return res.status(200).json(user);
   } catch (err) {
     console.error(err);
