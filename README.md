@@ -2,6 +2,7 @@
 ----
 
 A simple e-commerce Api made for learning purposes, it's built with Nodejs, Express and Joi for validations.
+- [Installation](#Login)
 
 # Register
 
@@ -152,8 +153,8 @@ A simple e-commerce Api made for learning purposes, it's built with Nodejs, Expr
 ```json
 {
     "price": "18.09",
-    "name": "Test product"
-    "description": "A product made for testing purposes"
+    "name": "Test product",
+    "description": "A product made for testing purposes",
     "image": "thisIsAnImage.jpg" (Optional)
 }
 ```
@@ -172,7 +173,7 @@ A simple e-commerce Api made for learning purposes, it's built with Nodejs, Expr
     "id": 1,
     "name": "Test product",
     "price": 18.09,
-    "description": ""A product made for testing purposes",
+    "description": "A product made for testing purposes",
     "imageUrl": "img/thisIsAnImage.jpg",
     "vendorID": 1,
     "updatedAt": "2020-05-07T12:07:03.254Z",
