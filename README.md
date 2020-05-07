@@ -1,7 +1,7 @@
 **Simple e-commerce Api**
 ----
 
-A simple e-commerce Api I made for learning purposes, it's built with Nodejs, Express and Joi for validations.
+A simple e-commerce Api made for learning purposes, it's built with Nodejs, Express and Joi for validations.
 
 # Register
 
@@ -133,14 +133,16 @@ A simple e-commerce Api I made for learning purposes, it's built with Nodejs, Ex
 
 **Method** : `POST`
 
-**Auth required** : NO
+**Auth required** : YES
 
 **Data constraints**
 
 ```json
 {
-    "email": "[valid email address]",
-    "password": "[password in plain text]"
+    "price": "[price]",
+    "name": "[name]"
+    "description": "[description in plain text]"
+    "image": "JPG, GIF OR PNG file"
 
 }
 ```
@@ -149,8 +151,10 @@ A simple e-commerce Api I made for learning purposes, it's built with Nodejs, Ex
 
 ```json
 {
-    "email": "iloveauth@example.com",
-    "password": "abcd1234",
+    "price": "18.09",
+    "name": "Test product"
+    "description": "A product made for testing purposes"
+    "image": "thisIsAnImage.jpg" (Optional)
 }
 ```
 
@@ -162,13 +166,23 @@ A simple e-commerce Api I made for learning purposes, it's built with Nodejs, Ex
 
 ```json
 {
-   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIVy4aWapaiYbgv1ck"
+    "discountAmount": 0,
+    "discountPercent": 0,
+    "status": 1,
+    "id": 1,
+    "name": "Test product",
+    "price": 18.09,
+    "description": ""A product made for testing purposes",
+    "imageUrl": "img/thisIsAnImage.jpg",
+    "vendorID": 1,
+    "updatedAt": "2020-05-07T12:07:03.254Z",
+    "createdAt": "2020-05-07T12:07:03.254Z"
 }
 ```
 
 ## Error Response
 
-**Condition** : If any email and password don't match or if user doesn't exists
+**Condition** : If any required field is empty
 
 **Code** : `400 BAD REQUEST`
 
@@ -177,7 +191,7 @@ A simple e-commerce Api I made for learning purposes, it's built with Nodejs, Ex
 ```json
 {
     "errors": [
-        {"message":"There's a problem with your credentials"}
+        {"message":"[field name] is required"}
     ]
 }
 ```
