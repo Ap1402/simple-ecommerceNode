@@ -1,5 +1,7 @@
 # Simple e-commerce Api
-----
+
+## General info
+A simple e-commerce Api made for learning purposes, it's built with Nodejs, Express and Joi for validations.
 ## Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
@@ -19,8 +21,6 @@
     * [Carts related](#carts-related)
     * [Orders related](#orders-related)
     
-## General info
-A simple e-commerce Api made for learning purposes, it's built with Nodejs, Express and Joi for validations.
 	
 ## Technologies
 Project is created with:
